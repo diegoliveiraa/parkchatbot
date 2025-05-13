@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "morador")
-@Table(name = "tb-morador")
+@Table(name = "tb_morador")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,6 +17,7 @@ import java.util.UUID;
 public class Morador {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "morador_id", nullable = false, updatable = false)
     private UUID id;
 
     private String nome;
