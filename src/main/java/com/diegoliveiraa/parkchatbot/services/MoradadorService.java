@@ -3,6 +3,7 @@ package com.diegoliveiraa.parkchatbot.services;
 import com.diegoliveiraa.parkchatbot.dtos.MoradorRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.MoradorResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
+import com.diegoliveiraa.parkchatbot.mappers.MoradorMapper;
 import com.diegoliveiraa.parkchatbot.repositories.MoradorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,6 @@ import java.util.stream.Collectors;
 public class MoradadorService {
     @Autowired
     private MoradorRepository moradorRepository;
-    @Autowired
-    private VagaService vagaService;
-    @Autowired
-    private AluguelService aluguelService;
 
     public MoradorResponseDTO createMorador(MoradorRequestDTO dto) {
 
@@ -27,13 +24,7 @@ public class MoradadorService {
 
         this.moradorRepository.save(newMorador);
 
-        return new MoradorResponseDTO(
-                dto.nome(),
-                dto.telefone(),
-                dto.residencia(),
-                null,
-                List.of(),
-                List.of());
+        return MoradorMapper.toDTO(newMorador);
     }
 
     public MoradorResponseDTO updateMorador(MoradorRequestDTO dto) {
@@ -48,13 +39,7 @@ public class MoradadorService {
 
         this.moradorRepository.save(morador);
 
-        return new MoradorResponseDTO(
-                morador.getNome(),
-                morador.getTelefone(),
-                morador.getResidencia(),
-                morador.getVaga(),
-                morador.getAlugueisComoInquilino(),
-                morador.getAlugueisComoProprietario());
+        return MoradorMapper.toDTO(morador);
     }
 
     public void deleteMorador(UUID uuid) {
@@ -68,14 +53,8 @@ public class MoradadorService {
     public List<MoradorResponseDTO> getAllMorador() {
 
         return this.moradorRepository.findAll().stream()
-                .map(morador -> new MoradorResponseDTO(
-                        morador.getNome(),
-                        morador.getTelefone(),
-                        morador.getResidencia(),
-                        morador.getVaga(),
-                        morador.getAlugueisComoInquilino(),
-                        morador.getAlugueisComoProprietario()
-                ))
+                .map(MoradorMapper::toDTO
+                )
                 .collect(Collectors.toList());
     }
 
@@ -83,13 +62,10 @@ public class MoradadorService {
 
         Morador morador = this.moradorRepository.findById(uuid).orElseThrow(() -> new Exception("Morador nao encontrado"));
 
-        return new MoradorResponseDTO(
-                morador.getNome(),
-                morador.getTelefone(),
-                morador.getResidencia(),
-                morador.getVaga(),
-                morador.getAlugueisComoInquilino(),
-                morador.getAlugueisComoProprietario());
+        return MoradorMapper.toDTO(morador);
     }
 
+    public Morador getEntidade(UUID uuid) throws Exception {
+        return this.moradorRepository.findById(uuid).orElseThrow(() -> new Exception("Morador nao encontrado"));
+    }
 }
