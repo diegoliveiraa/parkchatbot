@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public record AluguelResponseDTO(
         Vaga vaga,
+        Morador proprietario,
         Morador inquilino,
         LocalDateTime inicio,
         LocalDateTime fim,
