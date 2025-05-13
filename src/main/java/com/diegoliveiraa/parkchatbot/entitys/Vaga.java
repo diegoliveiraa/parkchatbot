@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "vaga")
-@Table(name = "tb-vaga")
+@Table(name = "tb_vaga")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +19,7 @@ import java.util.UUID;
 public class Vaga {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "vaga_id", nullable = false, updatable = false)
     private UUID id;
     private String numeroVaga;
     private BigDecimal valorMensal;
