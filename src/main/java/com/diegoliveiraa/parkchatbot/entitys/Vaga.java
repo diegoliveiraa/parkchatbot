@@ -1,5 +1,6 @@
 package com.diegoliveiraa.parkchatbot.entitys;
 
+import com.diegoliveiraa.parkchatbot.dtos.VagaRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,4 +30,10 @@ public class Vaga {
 
     @OneToMany(mappedBy = "vaga")
     private List<Aluguel> historicoAlugueis;
+
+    public Vaga(VagaRequestDTO dto) {
+        this.numeroVaga = dto.numeroVaga();
+        this.valorMensal = dto.valorMensal();
+
+    }
 }
