@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "aluguelId")
+@EqualsAndHashCode(of = "id")
 public class Aluguel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,6 +20,8 @@ public class Aluguel {
 
     @ManyToOne
     private Vaga vaga;
+    @ManyToOne
+    private Morador proprietario;
     @ManyToOne
     private Morador inquilino;
 
