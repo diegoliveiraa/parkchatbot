@@ -3,13 +3,11 @@ package com.diegoliveiraa.parkchatbot.services;
 import com.diegoliveiraa.parkchatbot.dtos.MoradorRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.MoradorResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
-import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.repositories.MoradorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,96 +18,78 @@ public class MoradadorService {
     private MoradorRepository moradorRepository;
     @Autowired
     private VagaService vagaService;
+    @Autowired
+    private AluguelService aluguelService;
 
     public MoradorResponseDTO createMorador(MoradorRequestDTO dto) {
 
-        Vaga vagaPropria = this.vagaService.getVaga(dto.vaga());
-
-        List<Vaga> vagasAlugadas = dto.vagasAlugadas() != null
-                ? dto.vagasAlugadas().stream()
-                .map(vagaService::getVaga)
-                .collect(Collectors.toList())
-                : new ArrayList<>();
-
         Morador newMorador = new Morador(dto);
-        newMorador.setVaga(vagaPropria);
-        newMorador.setVagasAlugadas(vagasAlugadas);
 
         this.moradorRepository.save(newMorador);
 
-        MoradorResponseDTO responseDTO = new MoradorResponseDTO(
+        return new MoradorResponseDTO(
                 dto.nome(),
                 dto.telefone(),
                 dto.residencia(),
-                vagaPropria,
-                vagasAlugadas);
-
-        return responseDTO;
+                null,
+                List.of(),
+                List.of());
     }
 
     public MoradorResponseDTO updateMorador(MoradorRequestDTO dto) {
 
-        Vaga vagaPropria = this.vagaService.getVaga(dto.vaga());
-
-        List<Vaga> vagasAlugadas = dto.vagasAlugadas() != null
-                ? dto.vagasAlugadas().stream()
-                .map(vagaService::getVaga)
-                .collect(Collectors.toList())
-                : new ArrayList<>();
-
-        Morador getMorador = this.moradorRepository.findById(dto.id())
+        Morador morador = this.moradorRepository.findById(dto.id())
                 .orElseThrow(() -> new EntityNotFoundException("Morador não encontrado com id: " + dto.id()));
 
 
-        getMorador.setNome(dto.nome());
-        getMorador.setTelefone(dto.telefone());
-        getMorador.setResidencia(dto.residencia());
-        getMorador.setVaga(vagaPropria);
-        getMorador.setVagasAlugadas(vagasAlugadas);
+        morador.setNome(dto.nome());
+        morador.setTelefone(dto.telefone());
+        morador.setResidencia(dto.residencia());
 
-        this.moradorRepository.save(getMorador);
+        this.moradorRepository.save(morador);
 
         return new MoradorResponseDTO(
-                getMorador.getNome(),
-                getMorador.getTelefone(),
-                getMorador.getResidencia(),
-                getMorador.getVaga(),
-                getMorador.getVagasAlugadas());
+                morador.getNome(),
+                morador.getTelefone(),
+                morador.getResidencia(),
+                morador.getVaga(),
+                morador.getAlugueisComoInquilino(),
+                morador.getAlugueisComoProprietario());
     }
 
     public void deleteMorador(UUID uuid) {
 
-        this.moradorRepository.deleteById(uuid);
+        Morador morador = this.moradorRepository.findById(uuid)
+                .orElseThrow(() -> new EntityNotFoundException("Morador não encontrado com id: " + uuid));
+
+        this.moradorRepository.delete(morador);
     }
 
     public List<MoradorResponseDTO> getAllMorador() {
 
-        List<Morador> moradores = this.moradorRepository.findAll();
-
-        List<MoradorResponseDTO> listMoradores = new ArrayList<>();
-        for (Morador morador : moradores) {
-            listMoradores.add(new MoradorResponseDTO(
-                    morador.getNome(),
-                    morador.getTelefone(),
-                    morador.getResidencia(),
-                    morador.getVaga(),
-                    morador.getVagasAlugadas()));
-        }
-        return listMoradores;
+        return this.moradorRepository.findAll().stream()
+                .map(morador -> new MoradorResponseDTO(
+                        morador.getNome(),
+                        morador.getTelefone(),
+                        morador.getResidencia(),
+                        morador.getVaga(),
+                        morador.getAlugueisComoInquilino(),
+                        morador.getAlugueisComoProprietario()
+                ))
+                .collect(Collectors.toList());
     }
 
     public MoradorResponseDTO getMorador(UUID uuid) throws Exception {
 
         Morador morador = this.moradorRepository.findById(uuid).orElseThrow(() -> new Exception("Morador nao encontrado"));
 
-        MoradorResponseDTO responseDTO = new MoradorResponseDTO(
+        return new MoradorResponseDTO(
                 morador.getNome(),
                 morador.getTelefone(),
                 morador.getResidencia(),
                 morador.getVaga(),
-                morador.getVagasAlugadas());
-
-        return responseDTO;
+                morador.getAlugueisComoInquilino(),
+                morador.getAlugueisComoProprietario());
     }
 
 }
