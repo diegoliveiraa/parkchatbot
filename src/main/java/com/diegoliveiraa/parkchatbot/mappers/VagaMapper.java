@@ -7,15 +7,13 @@ import java.util.Collections;
 
 public class VagaMapper {
     public static VagaResponseDTO toDTO(Vaga vaga) {
-        if (vaga == null) {
-            return null;
-        }
         return new VagaResponseDTO(
                 vaga.getNumeroVaga(),
                 vaga.getValorMensal(),
                 vaga.getDataCadastro(),
-                null,
+                MoradorResumoMapper.toDTO(vaga.getProprietario()),
                 Collections.emptyList()
         );
     }
 }
+
