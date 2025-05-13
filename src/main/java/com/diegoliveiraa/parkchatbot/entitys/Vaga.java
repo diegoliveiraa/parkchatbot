@@ -14,14 +14,13 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "vagaId")
+@EqualsAndHashCode(of = "id")
 public class Vaga {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID vagaId;
+    private UUID id;
     private String numeroVaga;
     private BigDecimal valorMensal;
-    private boolean disponibilidade;
     private LocalDateTime dataCadastro;
 
     @OneToOne()
