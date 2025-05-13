@@ -10,6 +10,7 @@ public record MoradorResponseDTO(
         String telefone,
         String residencia,
         Vaga vaga,
-        List<Aluguel> vagasAlugadas) {
+        List<Aluguel> alugueisComoInquilino,
+        List<Aluguel> alugueisComoProprietario) {
 
 }
