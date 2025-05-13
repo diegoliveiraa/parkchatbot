@@ -4,6 +4,7 @@ import com.diegoliveiraa.parkchatbot.dtos.MoradorRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.swing.text.StyleContext;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,11 +14,11 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "moradorId")
+@EqualsAndHashCode(of = "id")
 public class Morador {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID moradorId;
+    private UUID id;
 
     private String nome;
     private String telefone;
@@ -27,7 +28,10 @@ public class Morador {
     private Vaga vaga;
 
     @OneToMany(mappedBy = "inquilino")
-    private List<Aluguel> vagasAlugadas;
+    private List<Aluguel> alugueisComoInquilino;
+
+    @OneToMany(mappedBy = "proprietario")
+    private List<Aluguel> alugueisComoProprietario;
 
     public Morador(MoradorRequestDTO dto) {
         this.nome = dto.nome();
