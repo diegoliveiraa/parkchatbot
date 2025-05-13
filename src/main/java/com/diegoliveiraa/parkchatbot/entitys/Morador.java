@@ -4,7 +4,6 @@ import com.diegoliveiraa.parkchatbot.dtos.MoradorRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.swing.text.StyleContext;
 import java.util.List;
 import java.util.UUID;
 
