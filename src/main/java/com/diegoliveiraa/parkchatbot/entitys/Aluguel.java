@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity(name = "aluguel")
-@Table(name = "tb-aluguel")
+@Table(name = "tb_aluguel")
 @Getter
 @Setter
 @AllArgsConstructor
