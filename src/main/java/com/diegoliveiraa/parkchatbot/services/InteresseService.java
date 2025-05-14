@@ -6,6 +6,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.mappers.InteressadoMapper;
+import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
 import com.diegoliveiraa.parkchatbot.repositories.InteresseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ public class InteresseService {
     @Autowired
     private InteresseRepository interesseRepository;
     @Autowired
-    private AluguelService aluguelService;
+    private AluguelRepository aluguelRepository;
     @Autowired
     private MoradadorService moradadorService;
 
     public InteresseResponseDTO createInterestAluguel(InteresseRequestDTO dto) throws Exception {
-        Aluguel aluguel = this.aluguelService.getEntidade(dto.aluguelId());
+        Aluguel aluguel = this.aluguelRepository.findById(dto.aluguelId()).orElseThrow(()-> new RuntimeException("Aluguel não encontrado"));
         Morador interessado = this.moradadorService.getEntidade(dto.interessado());
 
         Interesse interesse = new Interesse();
