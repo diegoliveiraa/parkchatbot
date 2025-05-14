@@ -1,4 +1,4 @@
-package com.diegoliveiraa.parkchatbot.dtos;
+package com.diegoliveiraa.parkchatbot.dtos.morador;
 
 import java.util.UUID;
 
@@ -7,4 +7,5 @@ public record MoradorResumoDTO(
         String nome,
         String telefone,
         String residencia
-) {}
+) {
+}
