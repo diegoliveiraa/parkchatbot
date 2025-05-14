@@ -1,4 +1,4 @@
-package com.diegoliveiraa.parkchatbot.dtos;
+package com.diegoliveiraa.parkchatbot.dtos.morador;
 
 import java.util.List;
 import java.util.UUID;
