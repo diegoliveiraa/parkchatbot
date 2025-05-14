@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.controllers;
 
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResponseDTO;
 import com.diegoliveiraa.parkchatbot.services.AluguelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class AluguelController {
     private AluguelService aluguelService;
 
     @PostMapping
-    public ResponseEntity<AluguelResponseDTO> createAluguel(@RequestBody AluguelRequestDTO dto) throws Exception {
-        AluguelResponseDTO responseDTO = this.aluguelService.createAluguel(dto);
+    public ResponseEntity<AluguelResponseDTO> createOfferAluguel(@RequestBody AluguelOfferRequestDTO dto) throws Exception {
+        AluguelResponseDTO responseDTO = this.aluguelService.createOfferAluguel(dto);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
     @GetMapping
