@@ -52,8 +52,8 @@ public class VagaController {
 
     @PutMapping("/{vagaId}/proprietario")
     public ResponseEntity<VagaResumoDTO> atribuirProprietario(@PathVariable UUID vagaId, @RequestBody AtribuirProprietarioRequestDTO requestDTO) throws Exception {
-        log.info("vagasId: {} | moradorId: {}",vagaId, requestDTO.moradorId());
-        this.vagaService.atribuirProprietario(vagaId,requestDTO.moradorId());
+        log.info("vagasId: {} | moradorId: {}", vagaId, requestDTO.moradorId());
+        this.vagaService.atribuirProprietario(vagaId, requestDTO.moradorId());
         VagaResumoDTO responseDTO = this.vagaService.getVaga(vagaId);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
