@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.mappers;
 
-import com.diegoliveiraa.parkchatbot.dtos.AluguelResponseDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 
 public class AluguelMapper {
@@ -9,9 +9,10 @@ public class AluguelMapper {
             return null;
         }
         return new AluguelResponseDTO(
-                aluguel.getVaga(),
-                aluguel.getProprietario(),
-                aluguel.getInquilino(),
+                VagaMoradorMapper.toDo(aluguel.getVaga()),
+                MoradorResumoMapper.toDTO(aluguel.getProprietario()),
+                MoradorResumoMapper.toDTO(aluguel.getInquilino()),
+                aluguel.getValorMensal(),
                 aluguel.getInicio(),
                 aluguel.getFim(),
                 aluguel.isAtivo()
