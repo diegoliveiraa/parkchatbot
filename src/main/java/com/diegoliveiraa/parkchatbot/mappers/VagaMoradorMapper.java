@@ -4,7 +4,7 @@ import com.diegoliveiraa.parkchatbot.dtos.morador.VagaMoradorResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 
 public class VagaMoradorMapper {
-    public  static VagaMoradorResponseDTO toDo(Vaga vaga){
+    public static VagaMoradorResponseDTO toDo(Vaga vaga) {
         if (vaga == null) {
             return null;
         }
