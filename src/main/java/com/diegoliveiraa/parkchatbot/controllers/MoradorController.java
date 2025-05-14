@@ -1,7 +1,7 @@
 package com.diegoliveiraa.parkchatbot.controllers;
 
-import com.diegoliveiraa.parkchatbot.dtos.MoradorRequestDTO;
-import com.diegoliveiraa.parkchatbot.dtos.MoradorResponseDTO;
+import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorResponseDTO;
 import com.diegoliveiraa.parkchatbot.services.MoradadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
