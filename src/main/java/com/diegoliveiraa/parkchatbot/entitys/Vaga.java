@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.entitys;
 
-import com.diegoliveiraa.parkchatbot.dtos.VagaRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +22,6 @@ public class Vaga {
     @Column(name = "vaga_id", nullable = false, updatable = false)
     private UUID id;
     private String numeroVaga;
-    private BigDecimal valorMensal;
     private LocalDateTime dataCadastro;
 
     @OneToOne()
@@ -34,7 +33,6 @@ public class Vaga {
 
     public Vaga(VagaRequestDTO dto) {
         this.numeroVaga = dto.numeroVaga();
-        this.valorMensal = dto.valorMensal();
 
     }
 }
