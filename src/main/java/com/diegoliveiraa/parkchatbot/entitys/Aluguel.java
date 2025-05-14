@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.entitys;
 
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,9 +34,7 @@ public class Aluguel {
 
     private boolean ativo;
 
-    public Aluguel(AluguelRequestDTO dto) {
+    public Aluguel(AluguelOfferRequestDTO dto) {
         this.valorMensal = dto.valorMensal();
-        this.inicio = dto.inicio();
-        this.fim = dto.fim();
     }
 }
