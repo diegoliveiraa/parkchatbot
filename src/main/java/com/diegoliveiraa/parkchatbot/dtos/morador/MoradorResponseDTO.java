@@ -1,16 +1,14 @@
-package com.diegoliveiraa.parkchatbot.dtos;
+package com.diegoliveiraa.parkchatbot.dtos.morador;
 
 import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
-import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 
 import java.util.List;
-import java.util.UUID;
 
 public record MoradorResponseDTO(
         String nome,
         String telefone,
         String residencia,
-        UUID vagaId,
+        VagaMoradorResponseDTO vaga,
         List<Aluguel> alugueisComoInquilino,
         List<Aluguel> alugueisComoProprietario) {
 
