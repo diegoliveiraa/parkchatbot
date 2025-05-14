@@ -4,7 +4,6 @@ import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
