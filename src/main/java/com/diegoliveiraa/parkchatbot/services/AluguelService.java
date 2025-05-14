@@ -1,7 +1,8 @@
 package com.diegoliveiraa.parkchatbot.services;
 
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResponseDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.ConfirmAluguelRequestDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
@@ -24,16 +25,32 @@ public class AluguelService {
     @Autowired
     private MoradadorService moradadorService;
 
-    public AluguelResponseDTO createAluguel(AluguelRequestDTO dto) throws Exception {
+    public AluguelResponseDTO createOfferAluguel(AluguelOfferRequestDTO dto) throws Exception {
 
         Vaga vaga = this.vagaService.getEntidade(dto.vagaId());
         Morador proprietario = vaga.getProprietario();
+
+        Aluguel offerAluguel = new Aluguel(dto);
+        offerAluguel.setVaga(vaga);
+        offerAluguel.setProprietario(proprietario);
+        offerAluguel.setAtivo(false);
+
+        this.aluguelRepository.save(offerAluguel);
+
+        return AluguelMapper.toDTO(offerAluguel);
+    }
+
+    public AluguelResponseDTO confirmAluguel(ConfirmAluguelRequestDTO dto) throws Exception {
+        Aluguel aluguel = aluguelRepository.findById(dto.aluguelId()).orElseThrow(()->new EntityNotFoundException("Aluguel não encontrado"));
+        if (aluguel.isAtivo()) {
+            throw  new IllegalStateException("Esta vaga ja esta alugada");
+        }
+
         Morador inquilino = this.moradadorService.getEntidade(dto.inquilinoId());
 
-        Aluguel aluguel = new Aluguel(dto);
-        aluguel.setVaga(vaga);
-        aluguel.setProprietario(proprietario);
         aluguel.setInquilino(inquilino);
+        aluguel.setInicio(dto.inicio());
+        aluguel.setFim(dto.fim());
         aluguel.setAtivo(true);
 
         this.aluguelRepository.save(aluguel);
