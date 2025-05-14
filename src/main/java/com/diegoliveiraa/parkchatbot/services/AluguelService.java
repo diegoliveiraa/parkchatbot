@@ -3,6 +3,7 @@ package com.diegoliveiraa.parkchatbot.services;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResponseDTO;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.ConfirmAluguelRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.ConfirmedAluguelResponseDTO;
 import com.diegoliveiraa.parkchatbot.dtos.interesse.InteresseRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.interesse.InteresseResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
@@ -10,6 +11,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.mappers.AluguelMapper;
+import com.diegoliveiraa.parkchatbot.mappers.ConfirmedAluguelMapper;
 import com.diegoliveiraa.parkchatbot.mappers.InteressadoMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
 import com.diegoliveiraa.parkchatbot.repositories.InteresseRepository;
@@ -49,7 +51,7 @@ public class AluguelService {
         return AluguelMapper.toDTO(offerAluguel);
     }
 
-    public AluguelResponseDTO confirmAluguel(ConfirmAluguelRequestDTO dto) throws Exception {
+    public ConfirmedAluguelResponseDTO confirmAluguel(ConfirmAluguelRequestDTO dto) throws Exception {
         Interesse interesse = this.interesseService.getEntidade(dto.interesseId());
 
         Aluguel aluguel = interesse.getAluguel();
@@ -65,7 +67,7 @@ public class AluguelService {
 
         this.aluguelRepository.save(aluguel);
 
-        return AluguelMapper.toDTO(aluguel);
+        return ConfirmedAluguelMapper.toDTO(aluguel);
     }
 
     public AluguelResponseDTO getAluguel(UUID uuid) {
