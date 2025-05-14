@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.mappers;
 
-import com.diegoliveiraa.parkchatbot.dtos.MoradorResumoDTO;
+import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorResumoDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 
 public class MoradorResumoMapper {
