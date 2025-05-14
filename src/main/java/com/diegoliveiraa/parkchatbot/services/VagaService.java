@@ -1,8 +1,7 @@
 package com.diegoliveiraa.parkchatbot.services;
 
-import com.diegoliveiraa.parkchatbot.dtos.AtribuirProprietarioRequestDTO;
-import com.diegoliveiraa.parkchatbot.dtos.VagaRequestDTO;
-import com.diegoliveiraa.parkchatbot.dtos.VagaResponseDTO;
+import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaResumoDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.mappers.VagaMapper;
@@ -25,7 +24,7 @@ public class VagaService {
     @Autowired
     private MoradadorService moradadorService;
 
-    public VagaResponseDTO createVaga(VagaRequestDTO dto) throws Exception {
+    public VagaResumoDTO createVaga(VagaRequestDTO dto) throws Exception {
 
         Vaga vaga = new Vaga(dto);
         vaga.setDataCadastro(LocalDateTime.now());
@@ -40,13 +39,13 @@ public class VagaService {
         return VagaMapper.toDTO(vaga);
     }
 
-    public VagaResponseDTO getVaga(UUID uuid){
+    public VagaResumoDTO getVaga(UUID uuid){
 
         Vaga vaga = this.vagaRepository.findById(uuid).orElseThrow(()->new RuntimeException("Vaga não encontrada"));
         return VagaMapper.toDTO(vaga);
     }
 
-    public List<VagaResponseDTO> getAllVaga() {
+    public List<VagaResumoDTO> getAllVaga() {
 
         return this.vagaRepository.findAll().stream()
                 .map(VagaMapper::toDTO
@@ -54,14 +53,13 @@ public class VagaService {
                 .collect(Collectors.toList());
     }
 
-    public VagaResponseDTO updateVaga(VagaRequestDTO dto) throws Exception {
+    public VagaResumoDTO updateVaga(VagaRequestDTO dto) throws Exception {
 
         Morador proprietario = this.moradadorService.getEntidade(dto.proprietario());
 
         Vaga vaga = this.vagaRepository.findById(dto.id()).orElseThrow(()->new RuntimeException("Vaga não encontrada"));
 
         vaga.setNumeroVaga(dto.numeroVaga());
-        vaga.setValorMensal(dto.valorMensal());
         vaga.setProprietario(proprietario);
 
         this.vagaRepository.save(vaga);
