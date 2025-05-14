@@ -39,9 +39,9 @@ public class VagaService {
         return VagaMapper.toDTO(vaga);
     }
 
-    public VagaResumoDTO getVaga(UUID uuid){
+    public VagaResumoDTO getVaga(UUID uuid) {
 
-        Vaga vaga = this.vagaRepository.findById(uuid).orElseThrow(()->new RuntimeException("Vaga não encontrada"));
+        Vaga vaga = this.vagaRepository.findById(uuid).orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
         return VagaMapper.toDTO(vaga);
     }
 
@@ -57,7 +57,7 @@ public class VagaService {
 
         Morador proprietario = this.moradadorService.getEntidade(dto.proprietario());
 
-        Vaga vaga = this.vagaRepository.findById(dto.id()).orElseThrow(()->new RuntimeException("Vaga não encontrada"));
+        Vaga vaga = this.vagaRepository.findById(dto.id()).orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
 
         vaga.setNumeroVaga(dto.numeroVaga());
         vaga.setProprietario(proprietario);
