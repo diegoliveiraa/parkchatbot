@@ -1,8 +1,8 @@
 package com.diegoliveiraa.parkchatbot.controllers;
 
-import com.diegoliveiraa.parkchatbot.dtos.AtribuirProprietarioRequestDTO;
-import com.diegoliveiraa.parkchatbot.dtos.VagaRequestDTO;
-import com.diegoliveiraa.parkchatbot.dtos.VagaResponseDTO;
+import com.diegoliveiraa.parkchatbot.dtos.vaga.AtribuirProprietarioRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaResumoDTO;
 import com.diegoliveiraa.parkchatbot.services.VagaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +21,14 @@ public class VagaController {
     private VagaService vagaService;
 
     @PostMapping
-    public ResponseEntity<VagaResponseDTO> createVaga(@RequestBody VagaRequestDTO requestDTO) throws Exception {
-        VagaResponseDTO responseDTO = this.vagaService.createVaga(requestDTO);
+    public ResponseEntity<VagaResumoDTO> createVaga(@RequestBody VagaRequestDTO requestDTO) throws Exception {
+        VagaResumoDTO responseDTO = this.vagaService.createVaga(requestDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<VagaResponseDTO> updateVaga(@RequestBody VagaRequestDTO requestDTO) throws Exception {
-        VagaResponseDTO responseDTO = this.vagaService.updateVaga(requestDTO);
+    public ResponseEntity<VagaResumoDTO> updateVaga(@RequestBody VagaRequestDTO requestDTO) throws Exception {
+        VagaResumoDTO responseDTO = this.vagaService.updateVaga(requestDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
@@ -39,22 +39,22 @@ public class VagaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VagaResponseDTO> getVaga(@PathVariable UUID id) throws Exception {
-        VagaResponseDTO responseDTO = this.vagaService.getVaga(id);
+    public ResponseEntity<VagaResumoDTO> getVaga(@PathVariable UUID id) throws Exception {
+        VagaResumoDTO responseDTO = this.vagaService.getVaga(id);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<VagaResponseDTO>> getAllVaga() {
-        List<VagaResponseDTO> responseDTO = this.vagaService.getAllVaga();
+    public ResponseEntity<List<VagaResumoDTO>> getAllVaga() {
+        List<VagaResumoDTO> responseDTO = this.vagaService.getAllVaga();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{vagaId}/proprietario")
-    public ResponseEntity<VagaResponseDTO> atribuirProprietario(@PathVariable UUID vagaId, @RequestBody AtribuirProprietarioRequestDTO requestDTO) throws Exception {
+    public ResponseEntity<VagaResumoDTO> atribuirProprietario(@PathVariable UUID vagaId, @RequestBody AtribuirProprietarioRequestDTO requestDTO) throws Exception {
         log.info("vagasId: {} | moradorId: {}",vagaId, requestDTO.moradorId());
         this.vagaService.atribuirProprietario(vagaId,requestDTO.moradorId());
-        VagaResponseDTO responseDTO = this.vagaService.getVaga(vagaId);
+        VagaResumoDTO responseDTO = this.vagaService.getVaga(vagaId);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
 
