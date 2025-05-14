@@ -3,16 +3,23 @@ package com.diegoliveiraa.parkchatbot.services;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResponseDTO;
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.ConfirmAluguelRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.interesse.InteresseRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.interesse.InteresseResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
+import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.mappers.AluguelMapper;
+import com.diegoliveiraa.parkchatbot.mappers.InteressadoMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
+import com.diegoliveiraa.parkchatbot.repositories.InteresseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,6 +31,8 @@ public class AluguelService {
     private VagaService vagaService;
     @Autowired
     private MoradadorService moradadorService;
+    @Autowired
+    private InteresseService interesseService;
 
     public AluguelResponseDTO createOfferAluguel(AluguelOfferRequestDTO dto) throws Exception {
 
@@ -41,14 +50,15 @@ public class AluguelService {
     }
 
     public AluguelResponseDTO confirmAluguel(ConfirmAluguelRequestDTO dto) throws Exception {
-        Aluguel aluguel = aluguelRepository.findById(dto.aluguelId()).orElseThrow(()->new EntityNotFoundException("Aluguel não encontrado"));
+        Interesse interesse = this.interesseService.getEntidade(dto.interesseId());
+
+        Aluguel aluguel = interesse.getAluguel();
+
         if (aluguel.isAtivo()) {
-            throw  new IllegalStateException("Esta vaga ja esta alugada");
+            throw new IllegalStateException("Esta oferta ja foi confirmada");
         }
 
-        Morador inquilino = this.moradadorService.getEntidade(dto.inquilinoId());
-
-        aluguel.setInquilino(inquilino);
+        aluguel.setInquilino(interesse.getInteressado());
         aluguel.setInicio(dto.inicio());
         aluguel.setFim(dto.fim());
         aluguel.setAtivo(true);
