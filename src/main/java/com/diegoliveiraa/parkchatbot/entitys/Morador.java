@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.entitys;
 
-import com.diegoliveiraa.parkchatbot.dtos.MoradorRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
