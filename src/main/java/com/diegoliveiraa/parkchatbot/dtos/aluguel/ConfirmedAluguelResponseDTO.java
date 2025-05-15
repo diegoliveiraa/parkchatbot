@@ -11,5 +11,6 @@ public record ConfirmedAluguelResponseDTO(
         String nomeInquilino,
         BigDecimal valorMensal,
         LocalDateTime inicio,
-        LocalDateTime fim
+        LocalDateTime fim,
+        String status
 ) {}

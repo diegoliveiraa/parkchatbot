@@ -10,6 +10,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
+import com.diegoliveiraa.parkchatbot.enums.AluguelStatus;
 import com.diegoliveiraa.parkchatbot.mappers.AluguelMapper;
 import com.diegoliveiraa.parkchatbot.mappers.ConfirmedAluguelMapper;
 import com.diegoliveiraa.parkchatbot.mappers.InteressadoMapper;
@@ -44,7 +45,7 @@ public class AluguelService {
         Aluguel offerAluguel = new Aluguel(dto);
         offerAluguel.setVaga(vaga);
         offerAluguel.setProprietario(proprietario);
-        offerAluguel.setAtivo(false);
+        offerAluguel.setStatus(AluguelStatus.DISPONIVEL);
 
         this.aluguelRepository.save(offerAluguel);
 
@@ -56,14 +57,14 @@ public class AluguelService {
 
         Aluguel aluguel = interesse.getAluguel();
 
-        if (aluguel.isAtivo()) {
+        if (!aluguel.getStatus().equals(AluguelStatus.DISPONIVEL)) {
             throw new IllegalStateException("Esta oferta ja foi confirmada");
         }
 
         aluguel.setInquilino(interesse.getInteressado());
         aluguel.setInicio(dto.inicio());
         aluguel.setFim(dto.fim());
-        aluguel.setAtivo(true);
+        aluguel.setStatus(AluguelStatus.ATIVO);
 
         this.aluguelRepository.save(aluguel);
 

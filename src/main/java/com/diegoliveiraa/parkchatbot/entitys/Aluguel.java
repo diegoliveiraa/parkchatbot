@@ -1,6 +1,7 @@
 package com.diegoliveiraa.parkchatbot.entitys;
 
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
+import com.diegoliveiraa.parkchatbot.enums.AluguelStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,7 +33,8 @@ public class Aluguel {
     private LocalDateTime inicio;
     private LocalDateTime fim;
 
-    private boolean ativo;
+    @Enumerated(EnumType.STRING)
+    private AluguelStatus status;
 
     public Aluguel(AluguelOfferRequestDTO dto) {
         this.valorMensal = dto.valorMensal();

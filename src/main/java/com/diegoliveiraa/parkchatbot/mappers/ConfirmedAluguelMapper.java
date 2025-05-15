@@ -17,7 +17,8 @@ public class ConfirmedAluguelMapper {
                 aluguel.getInquilino().getNome(),
                 aluguel.getValorMensal(),
                 aluguel.getInicio(),
-                aluguel.getFim()
+                aluguel.getFim(),
+                aluguel.getStatus().toString()
         );
     }
 }

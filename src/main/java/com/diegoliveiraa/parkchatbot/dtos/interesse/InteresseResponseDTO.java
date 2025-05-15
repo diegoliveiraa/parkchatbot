@@ -9,5 +9,6 @@ public record InteresseResponseDTO(UUID id,
                                    UUID aluguelId,
                                    String numeroVaga,
                                    MoradorResumoDTO interessado,
+                                   String status,
                                    LocalDateTime dataInteresse) {
 }

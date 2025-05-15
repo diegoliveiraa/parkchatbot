@@ -13,6 +13,6 @@ public record AluguelResponseDTO(
         BigDecimal valorMensal,
         LocalDateTime inicio,
         LocalDateTime fim,
-        boolean ativo
+        String status
 ) {
 }

@@ -15,7 +15,7 @@ public class AluguelMapper {
                 aluguel.getValorMensal(),
                 aluguel.getInicio(),
                 aluguel.getFim(),
-                aluguel.isAtivo()
+                aluguel.getStatus().toString()
         );
     }
 }

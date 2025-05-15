@@ -1,5 +1,6 @@
 package com.diegoliveiraa.parkchatbot.entitys;
 
+import com.diegoliveiraa.parkchatbot.enums.InteresseStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,6 @@ public class Interesse {
     @ManyToOne
     private Morador interessado;
     private LocalDateTime dataInteresse;
+    @Enumerated(EnumType.STRING)
+    private InteresseStatus status;
 }

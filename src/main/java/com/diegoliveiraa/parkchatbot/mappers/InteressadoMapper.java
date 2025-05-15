@@ -13,6 +13,7 @@ public class InteressadoMapper {
                 interesse.getAluguel().getId(),
                 interesse.getAluguel().getVaga().getNumeroVaga(),
                 MoradorResumoMapper.toDTO(interesse.getInteressado()),
+                interesse.getStatus().toString(),
                 interesse.getDataInteresse()
                 );
     }
