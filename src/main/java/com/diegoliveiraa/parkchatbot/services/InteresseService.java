@@ -60,4 +60,8 @@ public class InteresseService {
     public List<InteresseResponseDTO> getAllInteresse() {
         return this.interesseRepository.findAll().stream().map(InteressadoMapper::toDTO).collect(Collectors.toList());
     }
+
+    public void save(Interesse interesse) {
+        this.interesseRepository.save(interesse);
+    }
 }
