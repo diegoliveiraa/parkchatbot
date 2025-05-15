@@ -9,6 +9,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.enums.AluguelStatus;
+import com.diegoliveiraa.parkchatbot.enums.InteresseStatus;
 import com.diegoliveiraa.parkchatbot.mappers.aluguel.AluguelMapper;
 import com.diegoliveiraa.parkchatbot.mappers.aluguel.ConfirmedAluguelMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
@@ -60,6 +61,9 @@ public class AluguelService {
         aluguel.setFim(dto.fim());
         aluguel.setStatus(AluguelStatus.ATIVO);
 
+        interesse.setStatus(InteresseStatus.APROVADO);
+
+        this.interesseService.save(interesse);
         this.aluguelRepository.save(aluguel);
 
         return ConfirmedAluguelMapper.toDTO(aluguel);
