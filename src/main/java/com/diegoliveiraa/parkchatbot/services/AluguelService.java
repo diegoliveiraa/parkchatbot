@@ -65,6 +65,12 @@ public class AluguelService {
         return ConfirmedAluguelMapper.toDTO(aluguel);
     }
 
+    public List<AluguelResponseDTO> getAluguelDisponivel(){
+        return this.aluguelRepository.findByStatus(AluguelStatus.DISPONIVEL).stream()
+                .map(AluguelMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     public AluguelResponseDTO getAluguel(UUID uuid) {
         Aluguel aluguel = this.aluguelRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Aluguel não encontrada"));
         return AluguelMapper.toDTO(aluguel);
