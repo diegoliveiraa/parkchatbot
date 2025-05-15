@@ -45,6 +45,13 @@ public class InteresseService {
 
     public InteresseResponseDTO cancelInteresse(UUID uuid){
         Interesse interesse = this.interesseRepository.findById(uuid).orElseThrow(()-> new EntityNotFoundException("Interesse não encontrado"));
+        if (interesse.getStatus() == InteresseStatus.APROVADO) {
+            throw new IllegalStateException("Não é possível cancelar um interesse já aprovado.");
+        }
+
+        if (interesse.getStatus() == InteresseStatus.CANCELADO) {
+            throw new IllegalStateException("Este interesse já está cancelado.");
+        }
 
         interesse.setStatus(InteresseStatus.CANCELADO);
 
