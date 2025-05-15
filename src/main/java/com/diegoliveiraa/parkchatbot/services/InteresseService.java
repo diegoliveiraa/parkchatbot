@@ -6,7 +6,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.enums.InteresseStatus;
-import com.diegoliveiraa.parkchatbot.mappers.InteressadoMapper;
+import com.diegoliveiraa.parkchatbot.mappers.interesse.InteressadoMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
 import com.diegoliveiraa.parkchatbot.repositories.InteresseRepository;
 import jakarta.persistence.EntityNotFoundException;

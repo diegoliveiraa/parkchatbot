@@ -1,7 +1,8 @@
-package com.diegoliveiraa.parkchatbot.mappers;
+package com.diegoliveiraa.parkchatbot.mappers.morador;
 
 import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
+import com.diegoliveiraa.parkchatbot.mappers.vaga.VagaMoradorMapper;
 
 import java.util.Collections;
 

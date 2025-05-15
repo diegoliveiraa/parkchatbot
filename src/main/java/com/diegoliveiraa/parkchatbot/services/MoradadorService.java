@@ -3,7 +3,7 @@ package com.diegoliveiraa.parkchatbot.services;
 import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
-import com.diegoliveiraa.parkchatbot.mappers.MoradorMapper;
+import com.diegoliveiraa.parkchatbot.mappers.morador.MoradorMapper;
 import com.diegoliveiraa.parkchatbot.repositories.MoradorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

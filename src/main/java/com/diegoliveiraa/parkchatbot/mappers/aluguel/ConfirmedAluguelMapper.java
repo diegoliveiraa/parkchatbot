@@ -1,9 +1,7 @@
-package com.diegoliveiraa.parkchatbot.mappers;
+package com.diegoliveiraa.parkchatbot.mappers.aluguel;
 
 import com.diegoliveiraa.parkchatbot.dtos.aluguel.ConfirmedAluguelResponseDTO;
-import com.diegoliveiraa.parkchatbot.dtos.interesse.InteresseResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
-import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 
 public class ConfirmedAluguelMapper {
     public static ConfirmedAluguelResponseDTO toDTO(Aluguel aluguel){

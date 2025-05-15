@@ -4,7 +4,7 @@ import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaResumoDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
-import com.diegoliveiraa.parkchatbot.mappers.VagaMapper;
+import com.diegoliveiraa.parkchatbot.mappers.vaga.VagaMapper;
 import com.diegoliveiraa.parkchatbot.repositories.VagaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

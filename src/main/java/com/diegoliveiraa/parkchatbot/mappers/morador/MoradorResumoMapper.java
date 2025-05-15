@@ -1,4 +1,4 @@
-package com.diegoliveiraa.parkchatbot.mappers;
+package com.diegoliveiraa.parkchatbot.mappers.morador;
 
 import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorResumoDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
