@@ -1,9 +1,9 @@
 package com.diegoliveiraa.parkchatbot.services;
 
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResponseDTO;
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.ConfirmAluguelRequestDTO;
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.ConfirmedAluguelResponseDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.requests.AluguelOfferRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.requests.ConfirmAluguelRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.responses.AluguelResponseDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.responses.ConfirmedAluguelResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
@@ -42,7 +42,7 @@ public class AluguelService {
         offerAluguel.setProprietario(proprietario);
         offerAluguel.setStatus(AluguelStatus.DISPONIVEL);
 
-        this.aluguelRepository.save(offerAluguel);
+        this.save(offerAluguel);
 
         return AluguelMapper.toDTO(offerAluguel);
     }
@@ -70,7 +70,7 @@ public class AluguelService {
         return ConfirmedAluguelMapper.toDTO(aluguel);
     }
 
-    public List<AluguelResponseDTO> getAluguelDisponivel(){
+    public List<AluguelResponseDTO> getAluguelDisponivel() {
         return this.aluguelRepository.findByStatus(AluguelStatus.DISPONIVEL).stream()
                 .map(AluguelMapper::toDTO)
                 .collect(Collectors.toList());
@@ -92,4 +92,19 @@ public class AluguelService {
         return this.aluguelRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Aluguel não encontrado"));
     }
 
+    public AluguelResponseDTO cancelAluguel(UUID uuid) {
+        Aluguel aluguel = this.getEntidade(uuid);
+        if (aluguel.getStatus() == AluguelStatus.ENCERRADO) {
+            throw new IllegalStateException("Este aluguel ja esta encerrado");
+        }
+
+        aluguel.setStatus(AluguelStatus.ENCERRADO);
+        this.save(aluguel);
+
+        return AluguelMapper.toDTO(aluguel);
+    }
+
+    public void save(Aluguel aluguel) {
+        this.aluguelRepository.save(aluguel);
+    }
 }
