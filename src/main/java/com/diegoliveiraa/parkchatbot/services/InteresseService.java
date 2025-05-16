@@ -38,7 +38,7 @@ public class InteresseService {
         interesse.setDataInteresse(LocalDateTime.now());
         interesse.setStatus(InteresseStatus.EM_ANALISE);
 
-        this.interesseRepository.save(interesse);
+        this.save(interesse);
 
         return InteressadoMapper.toDTO(interesse);
     }
@@ -55,7 +55,7 @@ public class InteresseService {
 
         interesse.setStatus(InteresseStatus.CANCELADO);
 
-        this.interesseRepository.save(interesse);
+        this.save(interesse);
 
         return InteressadoMapper.toDTO(interesse);
     }
@@ -70,5 +70,18 @@ public class InteresseService {
 
     public void save(Interesse interesse) {
         this.interesseRepository.save(interesse);
+    }
+
+    public void cancelOtherInteresse(Interesse aprovadoInteresse) {
+        Aluguel aluguel = aprovadoInteresse.getAluguel();
+
+        List<Interesse> interesses = this.interesseRepository.findByAluguel(aluguel.getId());
+
+        for(Interesse interesse : interesses){
+            if (!interesse.getId().equals(aprovadoInteresse.getId()) && interesse.getStatus() == InteresseStatus.EM_ANALISE) {
+                interesse.setStatus(InteresseStatus.CANCELADO);
+                this.save(interesse);
+            }
+        }
     }
 }
