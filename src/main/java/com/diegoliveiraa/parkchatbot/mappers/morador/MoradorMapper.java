@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.mappers.morador;
 
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResumoMoradorDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.responses.AluguelResumoMoradorDTO;
 import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorResponseDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.mappers.aluguel.AluguelResumoMoradorMapper;

@@ -24,13 +24,13 @@ public class InteresseController {
     }
 
     @PutMapping("/{id}/cancelar")
-    public ResponseEntity<InteresseResponseDTO> cancelInteresse(@PathVariable UUID id){
+    public ResponseEntity<InteresseResponseDTO> cancelInteresse(@PathVariable UUID id) {
         InteresseResponseDTO responseDTO = this.interesseService.cancelInteresse(id);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<InteresseResponseDTO>> getAllInteresse(){
+    public ResponseEntity<List<InteresseResponseDTO>> getAllInteresse() {
         List<InteresseResponseDTO> responseDTO = this.interesseService.getAllInteresse();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

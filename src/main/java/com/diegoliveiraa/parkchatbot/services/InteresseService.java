@@ -29,7 +29,7 @@ public class InteresseService {
     private MoradadorService moradadorService;
 
     public InteresseResponseDTO createInterestAluguel(InteresseRequestDTO dto) throws Exception {
-        Aluguel aluguel = this.aluguelRepository.findById(dto.aluguelId()).orElseThrow(()-> new RuntimeException("Aluguel não encontrado"));
+        Aluguel aluguel = this.aluguelRepository.findById(dto.aluguelId()).orElseThrow(() -> new RuntimeException("Aluguel não encontrado"));
         Morador interessado = this.moradadorService.getEntidade(dto.interessado());
 
         Interesse interesse = new Interesse();
@@ -43,8 +43,8 @@ public class InteresseService {
         return InteressadoMapper.toDTO(interesse);
     }
 
-    public InteresseResponseDTO cancelInteresse(UUID uuid){
-        Interesse interesse = this.interesseRepository.findById(uuid).orElseThrow(()-> new EntityNotFoundException("Interesse não encontrado"));
+    public InteresseResponseDTO cancelInteresse(UUID uuid) {
+        Interesse interesse = this.interesseRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Interesse não encontrado"));
         if (interesse.getStatus() == InteresseStatus.APROVADO) {
             throw new IllegalStateException("Não é possível cancelar um interesse já aprovado.");
         }
@@ -60,8 +60,8 @@ public class InteresseService {
         return InteressadoMapper.toDTO(interesse);
     }
 
-    public Interesse getEntidade(UUID id){
-        return this.interesseRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Interesse não encontrado"));
+    public Interesse getEntidade(UUID id) {
+        return this.interesseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Interesse não encontrado"));
     }
 
     public List<InteresseResponseDTO> getAllInteresse() {
@@ -77,7 +77,7 @@ public class InteresseService {
 
         List<Interesse> interesses = this.interesseRepository.findByAluguel(aluguel.getId());
 
-        for(Interesse interesse : interesses){
+        for (Interesse interesse : interesses) {
             if (!interesse.getId().equals(aprovadoInteresse.getId()) && interesse.getStatus() == InteresseStatus.EM_ANALISE) {
                 interesse.setStatus(InteresseStatus.CANCELADO);
                 this.save(interesse);

@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.dtos.morador;
 
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelResumoMoradorDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.responses.AluguelResumoMoradorDTO;
 
 import java.util.List;
 

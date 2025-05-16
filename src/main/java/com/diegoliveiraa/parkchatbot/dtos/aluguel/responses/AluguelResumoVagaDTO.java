@@ -1,4 +1,4 @@
-package com.diegoliveiraa.parkchatbot.dtos.aluguel;
+package com.diegoliveiraa.parkchatbot.dtos.aluguel.responses;
 
 import java.util.UUID;
 

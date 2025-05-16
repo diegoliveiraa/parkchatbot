@@ -1,4 +1,4 @@
-package com.diegoliveiraa.parkchatbot.dtos.aluguel;
+package com.diegoliveiraa.parkchatbot.dtos.aluguel.responses;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,4 +13,5 @@ public record ConfirmedAluguelResponseDTO(
         LocalDateTime inicio,
         LocalDateTime fim,
         String status
-) {}
+) {
+}

@@ -5,7 +5,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.mappers.morador.MoradorResumoMapper;
 
 public class InteressadoMapper {
-    public static InteresseResponseDTO toDTO(Interesse interesse){
+    public static InteresseResponseDTO toDTO(Interesse interesse) {
         if (interesse == null) {
             return null;
         }
@@ -16,6 +16,6 @@ public class InteressadoMapper {
                 MoradorResumoMapper.toDTO(interesse.getInteressado()),
                 interesse.getStatus().toString(),
                 interesse.getDataInteresse()
-                );
+        );
     }
 }

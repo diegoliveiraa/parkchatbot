@@ -1,6 +1,5 @@
 package com.diegoliveiraa.parkchatbot.repositories;
 
-import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import org.springframework.data.jpa.repository.JpaRepository;
 

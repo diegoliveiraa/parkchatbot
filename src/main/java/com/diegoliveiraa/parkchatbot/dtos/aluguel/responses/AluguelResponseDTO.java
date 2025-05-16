@@ -1,4 +1,4 @@
-package com.diegoliveiraa.parkchatbot.dtos.aluguel;
+package com.diegoliveiraa.parkchatbot.dtos.aluguel.responses;
 
 import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorResumoDTO;
 import com.diegoliveiraa.parkchatbot.dtos.morador.VagaMoradorResponseDTO;

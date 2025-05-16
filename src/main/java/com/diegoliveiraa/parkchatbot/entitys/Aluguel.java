@@ -1,6 +1,6 @@
 package com.diegoliveiraa.parkchatbot.entitys;
 
-import com.diegoliveiraa.parkchatbot.dtos.aluguel.AluguelOfferRequestDTO;
+import com.diegoliveiraa.parkchatbot.dtos.aluguel.requests.AluguelOfferRequestDTO;
 import com.diegoliveiraa.parkchatbot.enums.AluguelStatus;
 import jakarta.persistence.*;
 import lombok.*;
