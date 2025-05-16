@@ -38,7 +38,7 @@ public class AluguelController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AluguelResponseDTO>> getAllAlugueis() {
+    public ResponseEntity<List<AluguelResponseDTO>> getAlugueisDisponiveis() {
         List<AluguelResponseDTO> responseDTO = this.aluguelService.getAluguelDisponivel();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
