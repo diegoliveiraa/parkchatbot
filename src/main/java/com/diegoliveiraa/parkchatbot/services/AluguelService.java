@@ -65,6 +65,7 @@ public class AluguelService {
 
         this.interesseService.save(interesse);
         this.aluguelRepository.save(aluguel);
+        this.interesseService.cancelOtherInteresse(interesse);
 
         return ConfirmedAluguelMapper.toDTO(aluguel);
     }
