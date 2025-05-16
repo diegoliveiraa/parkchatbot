@@ -75,7 +75,7 @@ public class InteresseService {
     public void cancelOtherInteresse(Interesse aprovadoInteresse) {
         Aluguel aluguel = aprovadoInteresse.getAluguel();
 
-        List<Interesse> interesses = this.interesseRepository.findByAluguel(aluguel.getId());
+        List<Interesse> interesses = this.interesseRepository.findByAluguelId(aluguel.getId());
 
         for (Interesse interesse : interesses) {
             if (!interesse.getId().equals(aprovadoInteresse.getId()) && interesse.getStatus() == InteresseStatus.EM_ANALISE) {

@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface InteresseRepository extends JpaRepository<Interesse, UUID> {
-    List<Interesse> findByAluguel(UUID aluguelId);
+    List<Interesse> findByAluguelId(UUID aluguelId);
 }
