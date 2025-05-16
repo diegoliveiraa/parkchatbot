@@ -34,7 +34,7 @@ public class AluguelController {
         ConfirmedAluguelResponseDTO responseDTO = this.aluguelService.confirmAluguel(dto);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
-    @Operation(summary = "Altera o status de uma oferta para cancelado")
+    @Operation(summary = "Encerra um aluguel pelo morador")
     @PutMapping("/{aluguelId}/encerrar")
     public ResponseEntity<AluguelResponseDTO> cancelAluguel(@PathVariable UUID aluguelId) {
         AluguelResponseDTO responseDTO = this.aluguelService.cancelAluguel(aluguelId);
@@ -44,6 +44,12 @@ public class AluguelController {
     @GetMapping
     public ResponseEntity<List<AluguelResponseDTO>> getAlugueisDisponiveis() {
         List<AluguelResponseDTO> responseDTO = this.aluguelService.getAluguelDisponivel();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+    @Operation(summary = "Retorna todos os alugueis ")
+    @GetMapping("/todos")
+    public ResponseEntity<List<AluguelResponseDTO>> getAlugueis() {
+        List<AluguelResponseDTO> responseDTO = this.aluguelService.getAllAluguel();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
