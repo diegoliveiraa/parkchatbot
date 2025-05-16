@@ -15,8 +15,10 @@ import com.diegoliveiraa.parkchatbot.mappers.aluguel.ConfirmedAluguelMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -102,6 +104,14 @@ public class AluguelService {
         this.save(aluguel);
 
         return AluguelMapper.toDTO(aluguel);
+    }
+
+    public void endAlugueisFinalizados(){
+        List<Aluguel> alugueis = this.aluguelRepository.findByStatusAndFimBefore(AluguelStatus.ATIVO, LocalDateTime.now());
+        alugueis.forEach(aluguel -> {
+            aluguel.setStatus(AluguelStatus.ENCERRADO);
+            this.save(aluguel);
+        });
     }
 
     public void save(Aluguel aluguel) {
