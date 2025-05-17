@@ -19,40 +19,6 @@ Este é um projeto de gestão de aluguel de vagas de condomínio entre moradores
 
 ---
 
-## 🚀 Como Executar o Projeto
-
-Clone o repositório:
-
-```bash
-git clone https://github.com/diegoliveiraa/parkchatbot.git
-```
-
-Acesse o diretório:
-
-```bash
-cd parkchatbot
-```
-
-Suba o banco PostgreSQL com Docker:
-
-```bash
-docker-compose up -d
-```
-
-Execute o projeto com Spring Boot na sua IDE ou via terminal:
-
-```bash
-./mvnw spring-boot:run
-```
-
-Acesse a documentação da API via Swagger:
-
-```
-http://localhost:8080/swagger-ui.html
-```
-
----
-
 ## 📌 Funcionalidades
 
 - Cadastro de moradores e vagas de garagem  
