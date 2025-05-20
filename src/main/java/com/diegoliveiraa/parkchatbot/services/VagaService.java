@@ -7,6 +7,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.exceptions.vaga.VagaNotFoundException;
 import com.diegoliveiraa.parkchatbot.mappers.vaga.VagaMapper;
 import com.diegoliveiraa.parkchatbot.repositories.VagaRepository;
+import com.diegoliveiraa.parkchatbot.validators.VagaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,11 @@ public class VagaService {
     @Autowired
     private MoradadorService moradadorService;
 
-    public VagaResumoDTO createVaga(VagaRequestDTO dto) throws Exception {
+    @Autowired
+    private VagaValidator vagaValidator;
 
+    public VagaResumoDTO createVaga(VagaRequestDTO dto) throws Exception {
+        this.vagaValidator.validateCreate(dto);
         Vaga vaga = new Vaga(dto);
         vaga.setDataCadastro(LocalDateTime.now());
 
@@ -40,7 +44,7 @@ public class VagaService {
     }
 
     public VagaResumoDTO getVaga(UUID uuid) throws Exception {
-
+        this.vagaValidator.validateGet(uuid);
         Vaga vaga = this.getEntidade(uuid);
         return VagaMapper.toDTO(vaga);
     }
@@ -54,7 +58,7 @@ public class VagaService {
     }
 
     public VagaResumoDTO updateVaga(VagaRequestDTO dto) throws Exception {
-
+        this.vagaValidator.validateUpdate(dto);
         Morador proprietario = this.moradadorService.getEntidade(dto.proprietario());
 
         Vaga vaga = this.getEntidade(dto.id());
@@ -68,7 +72,7 @@ public class VagaService {
     }
 
     public void deleteVaga(UUID uuid) throws Exception {
-
+        this.vagaValidator.validateDelete(uuid);
         Vaga vaga = this.getEntidade(uuid);
 
         this.vagaRepository.delete(vaga);
@@ -79,12 +83,10 @@ public class VagaService {
     }
 
     public void atribuirProprietario(UUID vagaId, UUID moradorId) throws Exception {
-        Vaga vaga = this.getEntidade(vagaId);
-        Morador morador = this.moradadorService.getEntidade(moradorId);
 
-        if (vaga.getProprietario() != null) {
-            throw new IllegalStateException("Esta vaga ja possui um proprietario");
-        }
+        Vaga vaga = this.getEntidade(vagaId);
+        this.vagaValidator.validateAtribuirPropreitario(vaga);
+        Morador morador = this.moradadorService.getEntidade(moradorId);
 
         vaga.setProprietario(morador);
         morador.setVaga(vaga);
