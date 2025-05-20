@@ -6,8 +6,6 @@ import java.util.UUID;
 public record MoradorRequestDTO(UUID id,
                                 String nome,
                                 String telefone,
-                                String residencia,
-                                UUID vaga,
-                                List<UUID> alugueisComoInquilino,
-                                List<UUID> alugueisComoProprietario) {
+                                String residencia
+                                ) {
 }
