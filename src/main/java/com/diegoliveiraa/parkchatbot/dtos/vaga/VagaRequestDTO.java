@@ -7,7 +7,5 @@ import java.util.UUID;
 public record VagaRequestDTO(
         UUID id,
         String numeroVaga,
-        LocalDateTime dataCadastro,
-        UUID proprietario,
-        List<UUID> historicoAlugueis) {
+        UUID proprietario) {
 }
