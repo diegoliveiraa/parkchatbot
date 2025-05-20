@@ -20,7 +20,7 @@ public class MoradorController {
     @Autowired
     private MoradadorService moradadorService;
 
-    @Operation(summary = "Cria um novo morador")
+    @Operation(summary = "Cria um novo morador(NÃO INFORMAR ID)")
     @PostMapping
     public ResponseEntity<MoradorResponseDTO> createMorador(@RequestBody MoradorRequestDTO requestDTO) {
         MoradorResponseDTO responseDTO = this.moradadorService.createMorador(requestDTO);
