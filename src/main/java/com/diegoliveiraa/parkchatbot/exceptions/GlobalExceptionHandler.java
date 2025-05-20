@@ -23,16 +23,6 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
-    @ExceptionHandler(VagaNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlerVagaNotFound(VagaNotFoundException ex){
-
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-    }
     @ExceptionHandler(AluguelNotFoundException.class)
     public ResponseEntity<ErrorResponse> handlerAluguelNotFound(AluguelNotFoundException ex){
 
