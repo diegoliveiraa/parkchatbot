@@ -39,7 +39,7 @@ public class VagaController {
 
     @Operation(summary = "Exclui uma vaga")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteVaga(@PathVariable UUID id) {
+    public ResponseEntity deleteVaga(@PathVariable UUID id) throws Exception {
         this.vagaService.deleteVaga(id);
         return new ResponseEntity<>("Vaga excluida com sucesso", HttpStatus.OK);
     }
