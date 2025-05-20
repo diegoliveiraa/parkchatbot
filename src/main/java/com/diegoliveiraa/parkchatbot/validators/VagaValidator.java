@@ -43,7 +43,7 @@ public class VagaValidator {
 
     private void validateRequiredFields(VagaRequestDTO dto) {
         if (dto.numeroVaga() == null || dto.numeroVaga().isBlank()) {
-            throw new InvalidVagaRequestException("Nome do vaga é obrigatório");
+            throw new InvalidVagaRequestException("Identificação do vaga é obrigatório");
         }
     }
 
