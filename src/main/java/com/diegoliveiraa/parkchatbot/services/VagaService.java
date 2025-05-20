@@ -4,9 +4,9 @@ import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaRequestDTO;
 import com.diegoliveiraa.parkchatbot.dtos.vaga.VagaResumoDTO;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
+import com.diegoliveiraa.parkchatbot.exceptions.vaga.VagaNotFoundException;
 import com.diegoliveiraa.parkchatbot.mappers.vaga.VagaMapper;
 import com.diegoliveiraa.parkchatbot.repositories.VagaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,9 +39,9 @@ public class VagaService {
         return VagaMapper.toDTO(vaga);
     }
 
-    public VagaResumoDTO getVaga(UUID uuid) {
+    public VagaResumoDTO getVaga(UUID uuid) throws Exception {
 
-        Vaga vaga = this.vagaRepository.findById(uuid).orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
+        Vaga vaga = this.getEntidade(uuid);
         return VagaMapper.toDTO(vaga);
     }
 
@@ -57,7 +57,7 @@ public class VagaService {
 
         Morador proprietario = this.moradadorService.getEntidade(dto.proprietario());
 
-        Vaga vaga = this.vagaRepository.findById(dto.id()).orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
+        Vaga vaga = this.getEntidade(dto.id());
 
         vaga.setNumeroVaga(dto.numeroVaga());
         vaga.setProprietario(proprietario);
@@ -67,16 +67,15 @@ public class VagaService {
         return VagaMapper.toDTO(vaga);
     }
 
-    public void deleteVaga(UUID uuid) {
+    public void deleteVaga(UUID uuid) throws Exception {
 
-        Vaga vaga = this.vagaRepository.findById(uuid)
-                .orElseThrow(() -> new EntityNotFoundException("Vaga não encontrado com id: " + uuid));
+        Vaga vaga = this.getEntidade(uuid);
 
         this.vagaRepository.delete(vaga);
     }
 
     public Vaga getEntidade(UUID uuid) throws Exception {
-        return this.vagaRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Vaga nao encontrado"));
+        return this.vagaRepository.findById(uuid).orElseThrow(VagaNotFoundException::new);
     }
 
     public void atribuirProprietario(UUID vagaId, UUID moradorId) throws Exception {
