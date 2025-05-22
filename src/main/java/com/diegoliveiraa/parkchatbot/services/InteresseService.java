@@ -38,7 +38,7 @@ public class InteresseService {
         Aluguel aluguel = this.aluguelRepository.findById(dto.aluguelId()).orElseThrow(AluguelNotFoundException::new);
         Morador interessado = this.moradadorService.getEntidade(dto.interessado());
 
-        boolean isExist = this.interesseRepository.existByAluguelIdAndInteressadoId(dto.aluguelId(), dto.interessado());
+        boolean isExist = this.interesseRepository.existsByAluguelIdAndInteressadoId(dto.aluguelId(), dto.interessado());
 
         this.interesseValidator.validateCreate(aluguel, interessado, isExist);
 
