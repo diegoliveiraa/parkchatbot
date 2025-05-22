@@ -31,9 +31,9 @@ public class VagaController {
     }
 
     @Operation(summary = "Atualiza uma vaga")
-    @PutMapping
-    public ResponseEntity<VagaResumoDTO> updateVaga(@RequestBody VagaRequestDTO requestDTO) throws Exception {
-        VagaResumoDTO responseDTO = this.vagaService.updateVaga(requestDTO);
+    @PutMapping("{id}/atualizar-dados-vaga")
+    public ResponseEntity<VagaResumoDTO> updateVaga(@PathVariable UUID id, @RequestBody VagaRequestDTO requestDTO) throws Exception {
+        VagaResumoDTO responseDTO = this.vagaService.updateVaga(id, requestDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
@@ -58,7 +58,7 @@ public class VagaController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Atribui uma morador a uma vaga")
+    @Operation(summary = "Atribui um morador a uma vaga")
     @PutMapping("/{vagaId}/proprietario")
     public ResponseEntity<VagaResumoDTO> atribuirProprietario(@PathVariable UUID vagaId, @RequestBody AtribuirProprietarioRequestDTO requestDTO) throws Exception {
         log.info("vagasId: {} | moradorId: {}", vagaId, requestDTO.moradorId());
