@@ -10,9 +10,11 @@ import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.enums.AluguelStatus;
 import com.diegoliveiraa.parkchatbot.enums.InteresseStatus;
+import com.diegoliveiraa.parkchatbot.exceptions.aluguel.AluguelNotFoundException;
 import com.diegoliveiraa.parkchatbot.mappers.aluguel.AluguelMapper;
 import com.diegoliveiraa.parkchatbot.mappers.aluguel.ConfirmedAluguelMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
+import com.diegoliveiraa.parkchatbot.validators.AluguelValidator;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,9 +35,11 @@ public class AluguelService {
     private MoradadorService moradadorService;
     @Autowired
     private InteresseService interesseService;
+    @Autowired
+    private AluguelValidator aluguelValidator;
 
     public AluguelResponseDTO createOfferAluguel(AluguelOfferRequestDTO dto) throws Exception {
-
+        this.aluguelValidator.validateCreateOffer(dto);
         Vaga vaga = this.vagaService.getEntidade(dto.vagaId());
         Morador proprietario = vaga.getProprietario();
 
@@ -50,13 +54,14 @@ public class AluguelService {
     }
 
     public ConfirmedAluguelResponseDTO confirmAluguel(ConfirmAluguelRequestDTO dto) throws Exception {
+
+        this.aluguelValidator.validateConfirmAluguel(dto);
+
         Interesse interesse = this.interesseService.getEntidade(dto.interesseId());
+        this.aluguelValidator.validateinteresseStatus(interesse.getStatus());
 
         Aluguel aluguel = interesse.getAluguel();
-
-        if (!aluguel.getStatus().equals(AluguelStatus.DISPONIVEL)) {
-            throw new IllegalStateException("Esta oferta ja foi confirmada");
-        }
+        this.aluguelValidator.validateAluguelStatus(aluguel.getStatus());
 
         aluguel.setInquilino(interesse.getInteressado());
         aluguel.setInicio(dto.inicio());
@@ -79,7 +84,7 @@ public class AluguelService {
     }
 
     public AluguelResponseDTO getAluguel(UUID uuid) {
-        Aluguel aluguel = this.aluguelRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Aluguel não encontrada"));
+        Aluguel aluguel = this.aluguelRepository.findById(uuid).orElseThrow(AluguelNotFoundException::new);
         return AluguelMapper.toDTO(aluguel);
     }
 
@@ -91,21 +96,19 @@ public class AluguelService {
     }
 
     public Aluguel getEntidade(UUID uuid) {
-        return this.aluguelRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Aluguel não encontrado"));
+        return this.aluguelRepository.findById(uuid).orElseThrow(AluguelNotFoundException::new);
     }
 
     public AluguelResponseDTO cancelAluguel(UUID uuid) {
         Aluguel aluguel = this.getEntidade(uuid);
-        if (aluguel.getStatus() == AluguelStatus.ENCERRADO) {
-            throw new IllegalStateException("Este aluguel ja esta encerrado");
-        }
+        this.aluguelValidator.validateCancel(aluguel.getStatus());
 
         aluguel.setStatus(AluguelStatus.ENCERRADO);
         this.save(aluguel);
 
         return AluguelMapper.toDTO(aluguel);
     }
-
+    //Acionado via Scheduled
     public void endAlugueisFinalizados(){
         List<Aluguel> alugueis = this.aluguelRepository.findByStatusAndFimBefore(AluguelStatus.ATIVO, LocalDateTime.now());
         alugueis.forEach(aluguel -> {
