@@ -28,9 +28,9 @@ public class MoradadorService {
         return MoradorMapper.toDTO(newMorador);
     }
 
-    public MoradorResponseDTO updateMorador(MoradorRequestDTO dto) {
-        this.moradorValidator.validateUpdate(dto);
-        Morador morador = this.moradorRepository.findById(dto.id())
+    public MoradorResponseDTO updateMorador(UUID uuid,MoradorRequestDTO dto) {
+        this.moradorValidator.validateUpdate(uuid, dto);
+        Morador morador = this.moradorRepository.findById(uuid)
                 .orElseThrow(MoradorNotFoundException::new);
         morador.setNome(dto.nome());
         morador.setTelefone(dto.telefone());
