@@ -7,6 +7,7 @@ import com.diegoliveiraa.parkchatbot.entitys.Vaga;
 import com.diegoliveiraa.parkchatbot.exceptions.vaga.VagaNotFoundException;
 import com.diegoliveiraa.parkchatbot.mappers.vaga.VagaMapper;
 import com.diegoliveiraa.parkchatbot.repositories.VagaRepository;
+import com.diegoliveiraa.parkchatbot.validators.MoradorValidator;
 import com.diegoliveiraa.parkchatbot.validators.VagaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class VagaService {
 
     @Autowired
     private VagaValidator vagaValidator;
+
+    @Autowired
+    private MoradorValidator moradorValidator;
 
     public VagaResumoDTO createVaga(VagaRequestDTO dto) throws Exception {
         this.vagaValidator.validateCreate(dto);
@@ -57,11 +61,11 @@ public class VagaService {
                 .collect(Collectors.toList());
     }
 
-    public VagaResumoDTO updateVaga(VagaRequestDTO dto) throws Exception {
-        this.vagaValidator.validateUpdate(dto);
+    public VagaResumoDTO updateVaga(UUID uuid, VagaRequestDTO dto) throws Exception {
+        this.vagaValidator.validateUpdate(uuid, dto);
         Morador proprietario = this.moradadorService.getEntidade(dto.proprietario());
 
-        Vaga vaga = this.getEntidade(dto.id());
+        Vaga vaga = this.getEntidade(uuid);
 
         vaga.setNumeroVaga(dto.numeroVaga());
         vaga.setProprietario(proprietario);
@@ -85,8 +89,9 @@ public class VagaService {
     public void atribuirProprietario(UUID vagaId, UUID moradorId) throws Exception {
 
         Vaga vaga = this.getEntidade(vagaId);
-        this.vagaValidator.validateAtribuirPropreitario(vaga);
+        this.vagaValidator.validateAtribuirProprietario(vaga);
         Morador morador = this.moradadorService.getEntidade(moradorId);
+        this.moradorValidator.validateVaga(morador);
 
         vaga.setProprietario(morador);
         morador.setVaga(vaga);
