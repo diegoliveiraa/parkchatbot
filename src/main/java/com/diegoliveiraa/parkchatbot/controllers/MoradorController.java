@@ -20,7 +20,7 @@ public class MoradorController {
     @Autowired
     private MoradadorService moradadorService;
 
-    @Operation(summary = "Cria um novo morador(NÃO INFORMAR ID)")
+    @Operation(summary = "Cria um novo morador")
     @PostMapping
     public ResponseEntity<MoradorResponseDTO> createMorador(@RequestBody MoradorRequestDTO requestDTO) {
         MoradorResponseDTO responseDTO = this.moradadorService.createMorador(requestDTO);
@@ -28,9 +28,9 @@ public class MoradorController {
     }
 
     @Operation(summary = "Atualiza dados de um morador")
-    @PutMapping
-    public ResponseEntity<MoradorResponseDTO> updateMorador(@RequestBody MoradorRequestDTO requestDTO) {
-        MoradorResponseDTO responseDTO = this.moradadorService.updateMorador(requestDTO);
+    @PutMapping("{id}/atualizar-dados")
+    public ResponseEntity<MoradorResponseDTO> updateMorador(@PathVariable UUID id, @RequestBody MoradorRequestDTO requestDTO) {
+        MoradorResponseDTO responseDTO = this.moradadorService.updateMorador(id, requestDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
