@@ -17,10 +17,8 @@ public class VagaValidator {
         validateRequiredFields(dto);
     }
 
-    public void validateUpdate(VagaRequestDTO dto) {
-        if (dto.id() == null || !isValidUUID(dto.id().toString())) {
-            throw new InvalidVagaRequestException("ID informado não é um UUID válido");
-        }
+    public void validateUpdate(UUID uuid, VagaRequestDTO dto) {
+        validateUUID(uuid);
         if (dto.proprietario() == null || dto.proprietario().toString().isBlank()) {
             throw new InvalidVagaRequestException("O proprietário não pode estar em branco");
         }
@@ -35,8 +33,8 @@ public class VagaValidator {
         validateUUID(uuid);
     }
 
-    public void validateAtribuirPropreitario(Vaga vaga){
-        if (vaga.getProprietario() == null) {
+    public void validateAtribuirProprietario(Vaga vaga){
+        if (vaga.getProprietario() != null) {
             throw new VagaAlreadyAssignedException("Vaga já possui um proprietário");
         }
     }
