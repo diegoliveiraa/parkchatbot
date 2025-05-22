@@ -6,9 +6,13 @@ import com.diegoliveiraa.parkchatbot.entitys.Aluguel;
 import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.enums.InteresseStatus;
+import com.diegoliveiraa.parkchatbot.exceptions.aluguel.AluguelNotFoundException;
+import com.diegoliveiraa.parkchatbot.exceptions.interesse.InteresseAlreadyExistException;
+import com.diegoliveiraa.parkchatbot.exceptions.interesse.InteresseNotFoundException;
 import com.diegoliveiraa.parkchatbot.mappers.interesse.InteressadoMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
 import com.diegoliveiraa.parkchatbot.repositories.InteresseRepository;
+import com.diegoliveiraa.parkchatbot.validators.InteresseValidator;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +31,16 @@ public class InteresseService {
     private AluguelRepository aluguelRepository;
     @Autowired
     private MoradadorService moradadorService;
+    @Autowired
+    private InteresseValidator interesseValidator;
 
-    public InteresseResponseDTO createInterestAluguel(InteresseRequestDTO dto) throws Exception {
-        Aluguel aluguel = this.aluguelRepository.findById(dto.aluguelId()).orElseThrow(() -> new RuntimeException("Aluguel não encontrado"));
+    public InteresseResponseDTO createInteresseAluguel(InteresseRequestDTO dto) throws Exception {
+        Aluguel aluguel = this.aluguelRepository.findById(dto.aluguelId()).orElseThrow(AluguelNotFoundException::new);
         Morador interessado = this.moradadorService.getEntidade(dto.interessado());
+
+        boolean isExist = this.interesseRepository.existByAluguelIdAndInteressadoId(dto.aluguelId(), dto.interessado());
+
+        this.interesseValidator.validateCreate(aluguel, interessado, isExist);
 
         Interesse interesse = new Interesse();
         interesse.setAluguel(aluguel);
@@ -44,14 +54,9 @@ public class InteresseService {
     }
 
     public InteresseResponseDTO cancelInteresse(UUID uuid) {
-        Interesse interesse = this.interesseRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Interesse não encontrado"));
-        if (interesse.getStatus() == InteresseStatus.APROVADO) {
-            throw new IllegalStateException("Não é possível cancelar um interesse já aprovado.");
-        }
+        Interesse interesse = this.interesseRepository.findById(uuid).orElseThrow(InteresseNotFoundException::new);
 
-        if (interesse.getStatus() == InteresseStatus.CANCELADO) {
-            throw new IllegalStateException("Este interesse já está cancelado.");
-        }
+        this.interesseValidator.validateCancel(interesse.getStatus());
 
         interesse.setStatus(InteresseStatus.CANCELADO);
 
@@ -61,7 +66,7 @@ public class InteresseService {
     }
 
     public Interesse getEntidade(UUID id) {
-        return this.interesseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Interesse não encontrado"));
+        return this.interesseRepository.findById(id).orElseThrow(InteresseNotFoundException::new);
     }
 
     public List<InteresseResponseDTO> getAllInteresse() {

@@ -23,7 +23,7 @@ public class InteresseController {
     @Operation(summary = "Cria um interesse em um aluguel")
     @PostMapping
     public ResponseEntity<InteresseResponseDTO> createInteresse(@RequestBody InteresseRequestDTO dto) throws Exception {
-        InteresseResponseDTO responseDTO = this.interesseService.createInterestAluguel(dto);
+        InteresseResponseDTO responseDTO = this.interesseService.createInteresseAluguel(dto);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 

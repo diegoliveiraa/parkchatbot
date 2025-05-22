@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface InteresseRepository extends JpaRepository<Interesse, UUID> {
     List<Interesse> findByAluguelId(UUID aluguelId);
+
+    boolean existByAluguelIdAndInteressadoId(UUID uuid, UUID interessado);
 }
