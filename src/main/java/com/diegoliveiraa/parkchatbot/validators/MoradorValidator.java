@@ -1,6 +1,7 @@
 package com.diegoliveiraa.parkchatbot.validators;
 
 import com.diegoliveiraa.parkchatbot.dtos.morador.MoradorRequestDTO;
+import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.exceptions.morador.InvalidMoradorRequestException;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,8 @@ public class MoradorValidator {
         validateRequiredFields(dto);
     }
 
-    public void validateUpdate(MoradorRequestDTO dto) {
-        if (dto.id() == null || !isValidUUID(dto.id().toString())) {
-            throw new InvalidMoradorRequestException("ID informado não é um UUID válido");
-        }
+    public void validateUpdate(UUID uuid, MoradorRequestDTO dto) {
+        validateUUID(uuid);
         validateRequiredFields(dto);
     }
 
@@ -40,6 +39,15 @@ public class MoradorValidator {
         }
         if (dto.telefone() == null || dto.telefone().isBlank()) {
             throw new InvalidMoradorRequestException("Telefone do morador é obrigatório");
+        }
+        String telefone = dto.telefone().trim();
+        if (telefone.length() != 11 || !telefone.matches("\\d{11}")) {
+            throw new InvalidMoradorRequestException("Numero de telefone invalido");
+        }
+    }
+    public void validateVaga(Morador morador) {
+        if (morador.getVaga() != null) {
+            throw new InvalidMoradorRequestException("Este morador já é proprietário de outra vaga.");
         }
     }
 
