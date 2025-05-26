@@ -15,9 +15,7 @@ import com.diegoliveiraa.parkchatbot.mappers.aluguel.AluguelMapper;
 import com.diegoliveiraa.parkchatbot.mappers.aluguel.ConfirmedAluguelMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
 import com.diegoliveiraa.parkchatbot.validators.AluguelValidator;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,7 +30,7 @@ public class AluguelService {
     @Autowired
     private VagaService vagaService;
     @Autowired
-    private MoradadorService moradadorService;
+    private MoradorService moradorService;
     @Autowired
     private InteresseService interesseService;
     @Autowired

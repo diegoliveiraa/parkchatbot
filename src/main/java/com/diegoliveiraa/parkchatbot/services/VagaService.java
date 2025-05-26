@@ -24,7 +24,7 @@ public class VagaService {
     private VagaRepository vagaRepository;
 
     @Autowired
-    private MoradadorService moradadorService;
+    private MoradorService moradorService;
 
     @Autowired
     private VagaValidator vagaValidator;
@@ -38,7 +38,7 @@ public class VagaService {
         vaga.setDataCadastro(LocalDateTime.now());
 
         if (dto.proprietario() != null) {
-            Morador proprietario = this.moradadorService.getEntidade(dto.proprietario());
+            Morador proprietario = this.moradorService.getEntidade(dto.proprietario());
             vaga.setProprietario(proprietario);
         }
 
@@ -63,7 +63,7 @@ public class VagaService {
 
     public VagaResumoDTO updateVaga(UUID uuid, VagaRequestDTO dto) throws Exception {
         this.vagaValidator.validateUpdate(uuid, dto);
-        Morador proprietario = this.moradadorService.getEntidade(dto.proprietario());
+        Morador proprietario = this.moradorService.getEntidade(dto.proprietario());
 
         Vaga vaga = this.getEntidade(uuid);
 
@@ -90,7 +90,7 @@ public class VagaService {
 
         Vaga vaga = this.getEntidade(vagaId);
         this.vagaValidator.validateAtribuirProprietario(vaga);
-        Morador morador = this.moradadorService.getEntidade(moradorId);
+        Morador morador = this.moradorService.getEntidade(moradorId);
         this.moradorValidator.validateVaga(morador);
 
         vaga.setProprietario(morador);

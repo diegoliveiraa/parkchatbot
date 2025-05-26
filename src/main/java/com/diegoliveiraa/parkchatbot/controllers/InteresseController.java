@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Tag(name = "Interesses", description = "Operações relacionadas a interesses em alugueis")
 @RestController
-@RequestMapping("/interesse")
+@RequestMapping("/interesses")
 public class InteresseController {
     @Autowired
     private InteresseService interesseService;

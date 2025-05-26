@@ -18,7 +18,7 @@ import java.util.UUID;
 @Tag(name = "Vagas", description = "Operações relacionadas a vagas")
 @Slf4j
 @RestController
-@RequestMapping("/vaga")
+@RequestMapping("/vagas")
 public class VagaController {
     @Autowired
     private VagaService vagaService;
@@ -58,7 +58,7 @@ public class VagaController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Atribui um morador a uma vaga")
+    @Operation(summary = "Atribui uma vaga a um morador")
     @PutMapping("/{vagaId}/proprietario")
     public ResponseEntity<VagaResumoDTO> atribuirProprietario(@PathVariable UUID vagaId, @RequestBody AtribuirProprietarioRequestDTO requestDTO) throws Exception {
         log.info("vagasId: {} | moradorId: {}", vagaId, requestDTO.moradorId());

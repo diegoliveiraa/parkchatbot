@@ -7,13 +7,11 @@ import com.diegoliveiraa.parkchatbot.entitys.Interesse;
 import com.diegoliveiraa.parkchatbot.entitys.Morador;
 import com.diegoliveiraa.parkchatbot.enums.InteresseStatus;
 import com.diegoliveiraa.parkchatbot.exceptions.aluguel.AluguelNotFoundException;
-import com.diegoliveiraa.parkchatbot.exceptions.interesse.InteresseAlreadyExistException;
 import com.diegoliveiraa.parkchatbot.exceptions.interesse.InteresseNotFoundException;
 import com.diegoliveiraa.parkchatbot.mappers.interesse.InteressadoMapper;
 import com.diegoliveiraa.parkchatbot.repositories.AluguelRepository;
 import com.diegoliveiraa.parkchatbot.repositories.InteresseRepository;
 import com.diegoliveiraa.parkchatbot.validators.InteresseValidator;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +28,13 @@ public class InteresseService {
     @Autowired
     private AluguelRepository aluguelRepository;
     @Autowired
-    private MoradadorService moradadorService;
+    private MoradorService moradorService;
     @Autowired
     private InteresseValidator interesseValidator;
 
     public InteresseResponseDTO createInteresseAluguel(InteresseRequestDTO dto) throws Exception {
         Aluguel aluguel = this.aluguelRepository.findById(dto.aluguelId()).orElseThrow(AluguelNotFoundException::new);
-        Morador interessado = this.moradadorService.getEntidade(dto.interessado());
+        Morador interessado = this.moradorService.getEntidade(dto.interessado());
 
         boolean isExist = this.interesseRepository.existsByAluguelIdAndInteressadoId(dto.aluguelId(), dto.interessado());
 

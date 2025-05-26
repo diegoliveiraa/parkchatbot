@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Tag(name = "Alugueis", description = "Operações relacionadas a aluguéis de vagas")
 @RestController
-@RequestMapping("/aluguel")
+@RequestMapping("/alugueis")
 public class AluguelController {
     @Autowired
     private AluguelService aluguelService;
