@@ -15,7 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class MoradadorService {
+public class MoradorService {
     @Autowired
     private MoradorRepository moradorRepository;
     @Autowired
