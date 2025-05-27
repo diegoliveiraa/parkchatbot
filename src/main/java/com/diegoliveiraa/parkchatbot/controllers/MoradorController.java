@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 @Tag(name = "Moradores", description = "Operações relacionadas a moradores")
 @RestController
-@RequestMapping("/morador")
+@RequestMapping("/moradores")
 public class MoradorController {
 
     @Autowired
